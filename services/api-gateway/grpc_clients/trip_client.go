@@ -5,6 +5,7 @@ import (
 	pb "ride-sharing/shared/proto/trip"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type tripServiceClient struct {
@@ -18,7 +19,10 @@ func NewTripServiceClient() (*tripServiceClient, error) {
 		tripServiceURL = "trip-service:9093"
 	}
 
-	conn, err := grpc.NewClient(tripServiceURL)
+	// explicitly opts into plaintext, unencrypted transport — no TLS handshake,
+	// no certificate verification.
+	// standard way to talk gRPC over a trusted internal network (like pod-to-pod traffic)
+	conn, err := grpc.NewClient(tripServiceURL, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
 	}
