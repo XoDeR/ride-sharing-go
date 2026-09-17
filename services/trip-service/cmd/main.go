@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"log"
 	"ride-sharing/services/trip-service/internal/domain"
 	"ride-sharing/services/trip-service/internal/infrastructure/repository"
 	"ride-sharing/services/trip-service/internal/service"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -20,6 +22,17 @@ func main() {
 		ID:     primitive.NewObjectID(),
 		UserID: "12",
 	}
-	svc.CreateTrip(ctx, fare)
+
+	t, err := svc.CreateTrip(ctx, fare)
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(t)
+
+	// temp to keep the program running, no exit here
+	for {
+		time.Sleep(time.Second)
+	}
 	//_ = svc
 }
