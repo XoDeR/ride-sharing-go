@@ -40,9 +40,10 @@ export default function RiderMap({ onRouteSelected }: RiderMapProps) {
     const userID = useMemo(() => crypto.randomUUID(), [])
     const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+    // Amsterdam, NL
     const location = {
-        latitude: 37.7749,
-        longitude: -122.4194,
+        latitude: 52.3676,
+        longitude: 4.9041,
     };
 
     const {
