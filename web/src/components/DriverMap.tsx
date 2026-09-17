@@ -13,9 +13,10 @@ import { RoutingControl } from "./RoutingControl";
 import { DriverCard } from "./DriverCard";
 import { TripEvents } from "../contracts";
 
+// Amsterdam, NL
 const START_LOCATION: Coordinate = {
-  latitude: 37.7749,
-  longitude: -122.4194,
+  latitude: 52.3676,
+  longitude: 4.9041,
 }
 
 const driverMarker = new L.Icon({
