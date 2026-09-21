@@ -62,6 +62,7 @@ func handleDriversWebSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO this can be removed
 	type Driver struct {
 		Id             string `json:"id"`
 		Name           string `json:"name"`
