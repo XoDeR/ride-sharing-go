@@ -154,8 +154,9 @@ func estimateFareRoute(f *domain.RideFareModel, route *tripTypes.OsrmApiResponse
 	pricingCfg := tripTypes.DefaultPricingConfig()
 	carPackagePrice := f.TotalPriceInCents
 
-	distanceKm := route.Routes[0].Distance
-	durationInMinutes := route.Routes[0].Duration
+	// OSRM returns distance in meters and duration in seconds
+	distanceKm := route.Routes[0].Distance / 1000
+	durationInMinutes := route.Routes[0].Duration / 60
 
 	distanceFare := distanceKm * pricingCfg.PricePerUnitOfDistance
 	timeFare := durationInMinutes * pricingCfg.PricingPerMinute
