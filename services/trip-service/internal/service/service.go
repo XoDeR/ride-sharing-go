@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"ride-sharing/services/trip-service/internal/domain"
 	tripTypes "ride-sharing/services/trip-service/pkg/types"
+	"ride-sharing/shared/env"
 	"ride-sharing/shared/proto/trip"
 	"ride-sharing/shared/types"
 
@@ -64,8 +65,8 @@ func (s *service) GetRoute(ctx context.Context, pickup, destination *types.Coord
 		}, nil
 	}
 
-	// later can use own hosted API
-	baseURL := "http://router.project-osrm.org"
+	// Falls back to the public demo server when OSRM_API is unset (e.g. no self-hosted OSRM running locally)
+	baseURL := env.GetString("OSRM_API", "http://router.project-osrm.org")
 
 	url := fmt.Sprintf(
 		"%s/route/v1/driving/%f,%f;%f,%f?overview=full&geometries=geojson",
