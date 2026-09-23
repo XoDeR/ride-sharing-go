@@ -22,23 +22,23 @@ spec:
           readinessProbe:
             exec:
               command: ["rabbitmq-diagnostics", "check_running"]
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            timeoutSeconds: 15
-            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 30
+            failureThreshold: 5
           livenessProbe:
             exec:
               command: ["rabbitmq-diagnostics", "check_running"]
             initialDelaySeconds: 60
             periodSeconds: 30
-            timeoutSeconds: 15
+            timeoutSeconds: 30
           resources:
             requests:
               memory: "512Mi"
               cpu: "250m"
             limits:
-              memory: "512Mi"
-              cpu: "250m"
+              memory: "1Gi"
+              cpu: "1000m"
           env:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
@@ -55,14 +55,14 @@ spec:
           volumeMounts:
             - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq
-volumeClaimTemplates:
-- metadata:
-    name: rabbitmq-data
-  spec:
-    accessModes: [ "ReadWriteOnce" ]
-    resources:
-      requests:
-        storage: 1Gi         
+  volumeClaimTemplates:
+    - metadata:
+        name: rabbitmq-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
