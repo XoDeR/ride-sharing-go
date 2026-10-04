@@ -13,6 +13,10 @@ k8s_yaml('./infra/development/k8s/app-config.yaml')
 k8s_yaml('./infra/development/k8s/rabbitmq-deployment.yaml')
 k8s_resource('rabbitmq', port_forwards=['5672', '15672'], labels='tooling')
 ### End RabbitMQ ###
+### MongoDB ###
+k8s_yaml('./infra/development/k8s/mongodb-deployment.yaml')
+k8s_resource('mongodb', port_forwards=['27017'], labels='tooling')
+### End MongoDB ###
 ### OSRM ###
 k8s_yaml('./infra/development/k8s/osrm-deployment.yaml')
 k8s_resource('osrm', port_forwards=['5000'], labels='tooling')
@@ -76,7 +80,7 @@ docker_build_with_restart(
 )
 
 k8s_yaml('./infra/development/k8s/trip-service-deployment.yaml')
-k8s_resource('trip-service', resource_deps=['trip-service-compile', 'rabbitmq', 'osrm'], labels="services")
+k8s_resource('trip-service', resource_deps=['trip-service-compile', 'rabbitmq', 'osrm', 'mongodb'], labels="services")
 
 ### End of Trip Service ###
 ### Driver Service ###
