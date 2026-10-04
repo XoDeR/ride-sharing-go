@@ -1,6 +1,7 @@
 # "Microservices with Go"
 
-This is the starter code Microservices with Go.
+This is the code to implement microservices architecture with Go.
+Uses Kubernetes for both local development and for production.
 
 ## Project overview
 
@@ -77,6 +78,13 @@ go version
 
 6. Make sure [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/) is installed.
 
+### Windows
+
+It is checked: the project runs successfully on Windows 11 64-bit.
+The only difference is that the paths in tilt file should be with windows
+"\\" instead of Unix "/". All the rest works.
+Prerequisires: Docker desktop for windows, tilt, minikube.
+
 ## Run
 
 ```bash
@@ -102,6 +110,16 @@ It's advisable to first run the steps manually and then build a proper CI/CD flo
 ```bash
 REGION: europe-west1 # change according to your location
 PROJECT_ID: <your-gcp-project-id>
+```
+
+Optional namespace (currently not used, uses default namespace)
+
+```bash
+# Create the namespace
+kubectl apply -f infra/production/k8s/namespace.yaml
+
+# Switch to the namespace for subsequent commands
+kubectl config set-context --current --namespace=ride-sharing
 ```
 
 ## 1. Add secrets.yaml file to the production folder
@@ -181,7 +199,7 @@ kubectl delete pod <pod-name>
 kubectl rollout restart deployment
 ```
 
-## 7. Enjoy!
+## 7. Check if API works
 ```bash
 Get the External IP from the api-gateway
 kubectl get services
